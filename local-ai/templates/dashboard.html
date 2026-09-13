@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PetRobot V2 — Developer Dashboard</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand-dot"></span>
+      <h1>PetRobot <span class="ver">V2</span></h1>
+      <span class="sub">developer dashboard</span>
+    </div>
+    <div class="top-actions">
+      <span id="pill-connection" class="pill pill-off">WS: —</span>
+      <a class="navlink" href="/">Chat</a>
+    </div>
+  </header>
+
+  <main class="grid">
+
+    <!-- ===================== STATUS ===================== -->
+    <section class="card span-2">
+      <h2>Status</h2>
+      <div class="status-grid">
+        <div class="stat">
+          <span class="stat-label">WebSocket</span>
+          <span id="stat-ws" class="stat-value">—</span>
+        </div>
+        <div class="stat">
+          <span class="stat-label">Wi-Fi</span>
+          <span id="stat-wifi" class="stat-value">—</span>
+        </div>
+        <div class="stat">
+          <span class="stat-label">Robot</span>
+          <span id="stat-alive" class="stat-value">—</span>
+        </div>
+        <div class="stat">
+          <span class="stat-label">Brain</span>
+          <span id="stat-brain" class="stat-value">—</span>
+        </div>
+        <div class="stat">
+          <span class="stat-label">Uptime (robot)</span>
+          <span id="stat-uptime" class="stat-value">—</span>
+        </div>
+        <div class="stat">
+          <span class="stat-label">RSSI</span>
+          <span id="stat-rssi" class="stat-value">—</span>
+        </div>
+      </div>
+      <div id="brain-detail" class="brain-detail"></div>
+    </section>
+
+    <!-- ===================== BEHAVIOR ===================== -->
+    <section class="card">
+      <h2>Behavior</h2>
+      <div class="behavior-row">
+        <div class="stat">
+          <span class="stat-label">FSM State</span>
+          <span id="stat-fsm" class="stat-value big">—</span>
+        </div>
+        <div class="stat">
+          <span class="stat-label">Emotion</span>
+          <span id="stat-emotion" class="stat-value big">—</span>
+        </div>
+      </div>
+      <div id="last-command" class="last-command">Last command: —</div>
+    </section>
+
+    <!-- ===================== VISION (V2) ===================== -->
+    <section class="card">
+      <h2>Vision <span class="hint">(unit kamera)</span></h2>
+      <div class="status-grid">
+        <div class="stat">
+          <span class="stat-label">Camera Link</span>
+          <span id="stat-vision" class="stat-value">—</span>
+        </div>
+        <div class="stat">
+          <span class="stat-label">Person</span>
+          <span id="stat-person" class="stat-value">—</span>
+        </div>
+        <div class="stat">
+          <span class="stat-label">Zone</span>
+          <span id="stat-zone" class="stat-value">—</span>
+        </div>
+      </div>
+      <div id="camera-stream-box" class="camera-stream">
+        <img id="camera-stream" alt="camera stream" hidden>
+        <div id="camera-offline" class="camera-offline">kamera tidak tersedia</div>
+      </div>
+    </section>
+
+    <!-- ===================== DISTANCE (V2) ===================== -->
+    <section class="card">
+      <h2>Distance</h2>
+      <div class="status-grid">
+        <div class="stat">
+          <span class="stat-label">Jarak</span>
+          <span id="stat-distance" class="stat-value big">—</span>
+        </div>
+        <div class="stat">
+          <span class="stat-label">Obstacle</span>
+          <span id="stat-obstacle" class="stat-value">—</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== IMU (V2) ===================== -->
+    <section class="card">
+      <h2>IMU</h2>
+      <div class="status-grid">
+        <div class="stat">
+          <span class="stat-label">Orientation</span>
+          <span id="stat-orient" class="stat-value">—</span>
+        </div>
+        <div class="stat">
+          <span class="stat-label">Motion</span>
+          <span id="stat-motion" class="stat-value">—</span>
+        </div>
+        <div class="stat">
+          <span class="stat-label">Pitch / Roll</span>
+          <span id="stat-tilt" class="stat-value">—</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== WORLD STATE (V2) ===================== -->
+    <section class="card">
+      <h2>World State</h2>
+      <div id="world-summary" class="world-summary">Belum ada data world_state dari robot.</div>
+    </section>
+
+    <!-- ===================== MOVEMENT ===================== -->
+    <section class="card">
+      <h2>Movement</h2>
+      <div class="dpad">
+        <button class="btn mv up"    data-mv="forward_small">▲</button>
+        <button class="btn mv left"  data-mv="turn_left">◀</button>
+        <button class="btn mv stop"  data-mv="stop">■</button>
+        <button class="btn mv right" data-mv="turn_right">▶</button>
+        <button class="btn mv down"  data-mv="backward_small">▼</button>
+      </div>
+      <div class="speed">
+        <label for="speed-range">Speed <span id="speed-value">50%</span></label>
+        <input type="range" id="speed-range" min="0" max="100" value="50">
+      </div>
+    </section>
+
+    <!-- ===================== EMOTION TEST ===================== -->
+    <section class="card">
+      <h2>Emotion Test</h2>
+      <div class="btn-wrap">
+        <button class="btn emo" data-emotion="neutral">Neutral</button>
+        <button class="btn emo" data-emotion="happy">Happy</button>
+        <button class="btn emo" data-emotion="curious">Curious</button>
+        <button class="btn emo" data-emotion="sleepy">Sleepy</button>
+        <button class="btn emo" data-emotion="thinking">Thinking</button>
+        <button class="btn emo" data-emotion="scared">Scared</button>
+      </div>
+    </section>
+
+    <!-- ===================== ANIMATION TEST ===================== -->
+    <section class="card">
+      <h2>Animation Test</h2>
+      <div class="btn-wrap">
+        <button class="btn ani" data-anim="blink">Blink</button>
+        <button class="btn ani" data-anim="look_left">Look Left</button>
+        <button class="btn ani" data-anim="look_right">Look Right</button>
+        <button class="btn ani" data-anim="smile">Smile</button>
+        <button class="btn ani" data-anim="tilt">Tilt</button>
+      </div>
+    </section>
+
+    <!-- ===================== EVENT TEST ===================== -->
+    <section class="card">
+      <h2>Event Test <span class="hint">(simulasi tanpa ESP32)</span></h2>
+      <div class="btn-wrap">
+        <button class="btn evt" data-event="touch">Touch</button>
+        <button class="btn evt" data-event="obstacle">Obstacle</button>
+        <button class="btn evt" data-event="obstacle_clear">Obst. Clear</button>
+        <button class="btn evt" data-event="person">Person</button>
+        <button class="btn evt" data-event="person_lost">Person Lost</button>
+        <button class="btn evt" data-event="fall">Fall</button>
+        <button class="btn evt" data-event="world_state">World State</button>
+        <button class="btn evt" data-event="boot">Boot</button>
+      </div>
+    </section>
+
+    <!-- ===================== LOGS ===================== -->
+    <section class="card span-2">
+      <h2>Logs</h2>
+      <div class="log-filters">
+        <button class="chip active" data-filter="all">All</button>
+        <button class="chip" data-filter="event">Events</button>
+        <button class="chip" data-filter="command">Commands</button>
+        <button class="chip" data-filter="state">State</button>
+        <button class="chip" data-filter="error">Errors</button>
+        <button class="chip" data-filter="connection">Connection</button>
+      </div>
+      <div id="log-list" class="log-list"></div>
+    </section>
+
+  </main>
+
+  <footer class="footnote">
+    Browser → Local AI → WebSocket → ESP32. Browser tidak pernah terhubung langsung ke robot.
+  </footer>
+
+  <script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+</body>
+</html>

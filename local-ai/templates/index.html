@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Local AI — Chat</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/chat.css') }}">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <h1>Local AI</h1>
+      <span class="sub">chat &amp; robot services</span>
+    </div>
+    <a class="navlink" href="/dashboard">Robot Dashboard →</a>
+  </header>
+
+  <main class="chat-wrap">
+    <div id="chat-log" class="chat-log">
+      <div class="msg bot">Halo! Aku Local AI. Ada yang bisa kubantu?</div>
+    </div>
+    <form id="chat-form" class="chat-form">
+      <input id="chat-input" type="text" autocomplete="off"
+             placeholder="Tulis pesan…">
+      <button type="submit" id="chat-send">Kirim</button>
+    </form>
+  </main>
+
+  <script src="{{ url_for('static', filename='js/chat.js') }}"></script>
+</body>
+</html>
