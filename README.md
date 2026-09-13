@@ -638,6 +638,4 @@ tracked people, memory of favorite spots).
 
 ## License
 
-Personal DIY project — no license applied yet. If you fork or publish a
-derivative, adding an explicit license (MIT is a good default) and crediting
-the inspiration is encouraged.
+Personal DIY project — no license applied yet.
