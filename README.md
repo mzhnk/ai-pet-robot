@@ -639,4 +639,4 @@ The document ends with a final acceptance checklist.
 
 ## License
 
-Released under the MIT License. See [LICENSE](LICENSE) for details..
+Released under the MIT License. See [LICENSE](LICENSE) for details.
