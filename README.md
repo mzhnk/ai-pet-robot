@@ -536,7 +536,7 @@ The document ends with a final acceptance checklist.
 <summary><b>Show full tree</b></summary>
 
 ```
-├── README.md
+├── README.md                             This file
 ├── docs/
 │   └── TESTING.md                        Manual hardware procedures M0–M15 + acceptance checklist
 │
